@@ -1,0 +1,50 @@
+/* src/components/Filtro.css */
+.filtro-panel {
+    background: linear-gradient(145deg, #3b0f92, #160c33);
+    color: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0px 0px 20px rgba(80, 40, 180, 0.6);
+    width: 250px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .filtro-panel h3 {
+    margin-bottom: 20px;
+    color: #00e1ff;
+  }
+  
+  .filtro-panel label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+  
+  .filtro-panel select,
+  .filtro-panel input[type="range"] {
+    width: 100%;
+    padding: 5px;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 10px;
+    background-color: #291e64;
+    color: white;
+  }
+  
+  .filtro-panel button {
+    background: #00e1ff;
+    color: #1d1b3b;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .filtro-panel button:hover {
+    background: #00c4e1;
+  }
+  
