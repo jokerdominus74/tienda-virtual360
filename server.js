@@ -1,43 +1,51 @@
+// server.js
 import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
 import dotenv from 'dotenv';
-import Product from './models/Product.js';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import Stripe from 'stripe';
 
 dotenv.config();
 
 const app = express();
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/proyecto360';
+// ✅ Configurar Stripe
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('✅ Conectado a MongoDB');
-}).catch(err => {
-  console.error('❌ Error de conexión a MongoDB:', err);
-  process.exit(1);
+// ✅ Conectar a MongoDB
+const mongoUri = process.env.MONGO_URI;
+console.log('🔑 STRIPE SECRET KEY:', process.env.STRIPE_SECRET_KEY);
+console.log('🔓 STRIPE PUBLIC KEY:', process.env.STRIPE_PUBLIC_KEY);
+console.log('🌐 MONGO URI:', mongoUri);
+
+mongoose.connect(mongoUri)
+  .then(() => console.log('✅ Conectado a MongoDB'))
+  .catch(err => console.error('❌ Error al conectar a MongoDB:', err));
+
+// ✅ Ruta de prueba
+app.get('/ping', (req, res) => {
+  res.send('✅ Backend funcionando');
 });
 
-app.post('/api/products/filter', async (req, res) => {
-    const { category, price } = req.body;
+// ✅ Crear Payment Intent
+app.post('/create-payment-intent', async (req, res) => {
+  const { amount } = req.body;
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: 'usd',
+      automatic_payment_methods: { enabled: true }
+    });
 
-    try {
-        const query = {};
-
-        if (category) query.category = category;
-        if (price) query.price = { $eq: parseFloat(price) }; // 🔹 Filtrado por precio exacto
-
-        const products = await Product.find(query);
-        res.json(products);
-    } catch (error) {
-        console.error('❌ Error en filtros:', error);
-        res.status(500).json({ error: 'Error en el servidor' });
-    }
+    res.send({ clientSecret: paymentIntent.client_secret });
+  } catch (err) {
+    console.error('❌ Error al crear PaymentIntent:', err);
+    res.status(500).send({ error: 'Falló el intento de pago' });
+  }
 });
 
+// ✅ Iniciar servidor
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Servidor activo en http://localhost:${PORT}`));

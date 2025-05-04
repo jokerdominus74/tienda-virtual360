@@ -1,3 +1,4 @@
+// src/pages/App.jsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ShoppingCartProvider } from "../../Context";
@@ -20,12 +21,13 @@ import Privacidad from "../Privacidad";
 import Terminos from "../Terminos";
 import Faq from "../Faq";
 import Ayuda from "../Ayuda";
-import UserInfo from "../../Components/UserInfo"; // ✅ Importado correctamente
+import UserInfo from "../../Components/UserInfo";
 import FilterSidePanel from "../../Components/FilterSidePanel";
-import ProductList from '../ProductList'; // <- aquí importa tu nuevo archivo
+import ProductList from '../ProductList';
+import TestStripe from "../TestStripe";
 import "./App.css";
 
-// 📌 Componente para manejar los Providers
+// Wrapper de Contextos
 const AppProviders = ({ children }) => (
   <ShoppingCartProvider>
     <AuthProvider>{children}</AuthProvider>
@@ -37,25 +39,24 @@ const App = () => {
     <AppProviders>
       <Router>
         <div className="flex flex-col min-h-screen">
-          {/* ✅ Se agregó UserInfo dentro del Navbar */}
           <Navbar />
           <UserInfo />
 
           <main className="flex-grow">
             <Routes>
-              {/* Rutas principales */}
+              {/* Página de inicio y categorías */}
               <Route path="/" element={<Home />} />
               <Route path="/Ropa" element={<Home />} />
               <Route path="/Electronica" element={<Home />} />
               <Route path="/Muebles" element={<Home />} />
               <Route path="/Juguetes" element={<Home />} />
               <Route path="/Otros" element={<Home />} />
-              <Route path="/" element={<ProductList />} />
-
-              {/* ✅ Ruta dinámica por categoría */}
               <Route path="/category/:category" element={<Home />} />
 
-              {/* Rutas de usuario */}
+              {/* Productos */}
+              <Route path="/productos" element={<ProductList />} />
+
+              {/* Usuario */}
               <Route path="/my-account" element={<MyAccount />} />
               <Route path="/my-order" element={<MyOrder />} />
               <Route path="/my-orders" element={<MyOrders />} />
@@ -65,8 +66,10 @@ const App = () => {
               <Route path="/registrarse" element={<Registrarse />} />
               <Route path="/iniciar-sesion" element={<Login />} />
 
+              {/* Stripe y pagos */}
+              <Route path="/teststripe" element={<TestStripe />} />
 
-              {/* Rutas de información */}
+              {/* Información general */}
               <Route path="/sobre-nosotros" element={<SobreNosotros />} />
               <Route path="/nuestros-servicios" element={<NuestrosServicios />} />
               <Route path="/contacto" element={<Contacto />} />
@@ -74,11 +77,12 @@ const App = () => {
               <Route path="/terminos" element={<Terminos />} />
               <Route path="/faq" element={<Faq />} />
               <Route path="/ayuda" element={<Ayuda />} />
-              <Route path="/UserInfo" element={<UserInfo />} />
-             
 
-              {/* Ruta no encontrada */}
-              <Route path="/*" element={<NotFound />} />
+              {/* Otros componentes */}
+              <Route path="/UserInfo" element={<UserInfo />} />
+
+              {/* Ruta 404 */}
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
 

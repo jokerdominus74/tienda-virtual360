@@ -136,7 +136,7 @@ function FilterSidePanel({ isOpen, onClose }) {
       </div>
 
       {/* Botón Aplicar Filtros */}
-      <div className="absolute bottom-6 w-full flex justify-center px-4">
+      <div className="absolute bottom- w-full flex justify-center px-10">
         <button
           onClick={handleApplyFilters}
           className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold shadow-xl hover:from-pink-500 hover:to-purple-500 hover:scale-105 transition-all neonBorder"
