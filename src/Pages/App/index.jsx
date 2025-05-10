@@ -23,8 +23,17 @@ import Faq from "../Faq";
 import Ayuda from "../Ayuda";
 import UserInfo from "../../Components/UserInfo";
 import FilterSidePanel from "../../Components/FilterSidePanel";
+import HeaderBotones from "../../Components/HeaderBotones";
 import ProductList from '../ProductList';
 import TestStripe from "../TestStripe";
+import Ofertas from "../Ofertas";  // Página de Ofertas
+import Listas from "../Listas";    // Página de Listas
+import Todo from "../Todo";        // Página de TODO
+import Referidos from "../Referidos"; // Página de Referidos
+import Servicio from "../Servicio"; // Página de Servicio al Cliente
+import Vender from "../Vender";   // Página de Vender
+import NuevoNegocio from "../NuevoNegocio"; // Página de Nuevo Negocio
+import NuevosProductos from "../NuevosProductos"; // Página de Nuevos Productos
 import "./App.css";
 
 // Wrapper de Contextos
@@ -41,6 +50,7 @@ const App = () => {
         <div className="flex flex-col min-h-screen">
           <Navbar />
           <UserInfo />
+          <HeaderBotones />
 
           <main className="flex-grow">
             <Routes>
@@ -55,6 +65,16 @@ const App = () => {
 
               {/* Productos */}
               <Route path="/productos" element={<ProductList />} />
+
+              {/* Páginas de botones */}
+              <Route path="/todo" element={<Todo />} />
+              <Route path="/ofertas" element={<Ofertas />} />
+              <Route path="/listas" element={<Listas />} />
+              <Route path="/referidos" element={<Referidos />} />
+              <Route path="/servicio" element={<Servicio />} />
+              <Route path="/vender" element={<Vender />} />
+              <Route path="/nuevo-negocio" element={<NuevoNegocio />} />
+              <Route path="/nuevos-productos" element={<NuevosProductos />} />
 
               {/* Usuario */}
               <Route path="/my-account" element={<MyAccount />} />

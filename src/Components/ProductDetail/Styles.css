@@ -3,3 +3,23 @@
     height: calc(100vh - 68px);
     top: 68px;
   }
+
+  /* src/styles.css */
+
+.bg-metallic-blue {
+  background: linear-gradient(135deg, #1e3a8a, #60a5fa, #3b82f6);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+  background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:focus {
+  outline: none;
+}

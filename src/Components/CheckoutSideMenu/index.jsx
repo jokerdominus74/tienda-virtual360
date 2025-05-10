@@ -1,10 +1,9 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { ShoppingCartContext } from '../../Context';
 import OrderCard from '../../Components/OrderCard';
 import { totalPrice } from '../../utils';
-import CheckoutForm from '../../Components/CheckoutForm'; // Asegúrate de importar el CheckoutForm
+import CheckoutForm from '../../Components/CheckoutForm';
 import './styles.css';
 
 const CheckoutSideMenu = () => {
@@ -25,25 +24,24 @@ const CheckoutSideMenu = () => {
     };
 
     context.setOrder([...context.order, orderToAdd]);
-    context.setCartProducts([]); // Vaciar el carrito
-    context.setSearchByTitle(null); // Opcional, si deseas limpiar el filtro
-    setShowCheckout(true); // Mostrar el formulario de pago
+    context.setCartProducts([]);
+    context.setSearchByTitle(null);
+    setShowCheckout(true);
   };
 
   return (
     <aside
-      className={`${context.isCheckoutSideMenuOpen ? 'flex' : 'hidden'} checkout-side-menu flex-col fixed right-0 border border-black rounded-lg bg-white`}
+      className={`${context.isCheckoutSideMenuOpen ? 'flex' : 'hidden'} checkout-side-menu flex-col fixed right-0 top-0 h-full w-96 shadow-xl border-l border-[#48c7f0] bg-gradient-to-br from-[#1f174a] to-[#3b298c] z-50 rounded-l-xl text-white transition-all duration-300`}
     >
-      <div className='flex justify-between items-center p-6'>
-        <h2 className='font-medium text-xl'>My Order</h2>
-        <div>
-          <XMarkIcon
-            className='h-6 w-6 text-black cursor-pointer'
-            onClick={() => context.closeCheckoutSideMenu()}
-          />
-        </div>
+      <div className='flex justify-between items-center p-6 border-b border-[#3caee3]'>
+        <h2 className='font-semibold text-2xl tracking-wide text-cyan-300'>🛒 My Order</h2>
+        <XMarkIcon
+          className='h-6 w-6 text-cyan-400 hover:text-red-400 transition duration-200 cursor-pointer'
+          onClick={() => context.closeCheckoutSideMenu()}
+        />
       </div>
-      <div className='px-6 overflow-y-scroll flex-1'>
+
+      <div className='px-6 overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-cyan-300/40'>
         {context.cartProducts.map((product) => (
           <OrderCard
             key={product.id}
@@ -55,16 +53,18 @@ const CheckoutSideMenu = () => {
           />
         ))}
       </div>
-      <div className='px-6 mb-6'>
-        <p className='flex justify-between items-center mb-2'>
-          <span className='font-light'>Total:</span>
-          <span className='font-medium text-2xl'>${totalPrice(context.cartProducts)}</span>
+
+      <div className='px-6 mb-6 mt-4'>
+        <p className='flex justify-between items-center mb-4 text-lg text-white/80'>
+          <span>Total:</span>
+          <span className='font-bold text-3xl text-cyan-300'>${totalPrice(context.cartProducts)}</span>
         </p>
+
         <button
-          className='w-full bg-blue-700 py-3 text-white w-full rounded-lg'
+          className='w-full bg-gradient-to-r from-cyan-400 to-blue-500 hover:brightness-110 active:scale-95 transition transform py-3 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/30'
           onClick={handleCheckout}
         >
-          Checkout
+          💳 Checkout Now
         </button>
       </div>
 
